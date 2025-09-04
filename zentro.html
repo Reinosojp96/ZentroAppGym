@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zentro - Dashboard Gimnasio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .sidebar-transition {
+            transition: all 0.3s ease;
+        }
+        
+        .content-transition {
+            transition: margin-left 0.3s ease;
+        }
+        
+        .hover-scale {
+            transition: transform 0.2s ease;
+        }
+        
+        .hover-scale:hover {
+            transform: scale(1.02);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .card-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        .notification-badge {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+            }
+        }
+        
+        .modal-backdrop {
+            backdrop-filter: blur(5px);
+        }
+        
+        .qr-code {
+            image-rendering: pixelated;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div id="sidebar" class="fixed left-0 top-0 h-screen overflow-y-auto w-64 bg-gray-900 text-white sidebar-transition z-30">
+        <div class="p-6">
+            <div class="flex items-center space-x-3 mb-8">
+                <div class="w-10 h-10 gradient-bg rounded-lg flex items-center justify-center">
+                    <i class="fas fa-dumbbell text-white"></i>
+                </div>
+                <h1 class="text-xl font-bold">Zentro</h1>
+            </div>
+            
+            <nav class="space-y-2">
+                <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg bg-gray-800 hover:bg-gray-700" data-section="dashboard">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-800" data-section="clientes">
+                    <i class="fas fa-users"></i>
+                    <span>Clientes</span>
+                </a>
+                <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-800" data-section="recepcion">
+                    <i class="fas fa-id-card"></i>
+                    <span>Recepción</span>
+                </a>
+                <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-800" data-section="membresias">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Membresías</span>
+                </a>
+                <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-800" data-section="clases">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Clases</span>
+                </a>
+                <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-800" data-section="entrenadores">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Entrenadores</span>
+                </a>
+                <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-800" data-section="rutinas">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Rutinas</span>
+                </a>
+                <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-800" data-section="nutricion">
+                    <i class="fas fa-apple-alt"></i>
+                    <span>Nutrición</span>
+                </a>
+                <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-800" data-section="tienda">
+                    <i class="fas fa-store"></i>
+                    <span>Tienda</span>
+                </a>
+                <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-800" data-section="incidentes">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Incidentes</span>
+                </a>
+                <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-800" data-section="admin">
+                    <i class="fas fa-cog"></i>
+                    <span>Administración</span>
+                </a>
+                <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-800" data-section="configuracion">
+                    <i class="fas fa-sliders-h"></i>
+                    <span>Configuración</span>
+                </a>
+                <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-800" data-section="ayuda">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Ayuda</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <div id="main-content" class="ml-64 content-transition">
+        <header class="bg-white shadow-sm border-b">
+            <div class="flex items-center justify-between px-6 py-4">
+                <div class="flex items-center space-x-4">
+                    <button id="sidebar-toggle" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    <h2 id="section-title" class="text-2xl font-bold text-gray-800">Dashboard</h2>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button class="relative text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-bell text-xl"></i>
+                            <span class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full notification-badge"></span>
+                        </button>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <img src="https://via.placeholder.com/40x40" alt="Profile" class="w-10 h-10 rounded-full">
+                        <div>
+                            <p class="text-sm font-medium">Admin User</p>
+                            <p class="text-xs text-gray-500">Administrador</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="p-6">
+            <div id="dashboard-section" class="section-content">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                    <div class="bg-white p-6 rounded-lg card-shadow hover-scale">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600">Clientes Activos</p>
+                                <p class="text-3xl font-bold text-gray-800">1,247</p>
+                                <p class="text-sm text-green-600">+12% este mes</p>
+                            </div>
+                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-users text-blue-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg card-shadow hover-scale">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600">Ingresos del Día</p>
+                                <p class="text-3xl font-bold text-gray-800">$2,450</p>
+                                <p class="text-sm text-green-600">+8% ayer</p>
+                            </div>
+                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-dollar-sign text-green-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg card-shadow hover-scale">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600">Clases Hoy</p>
+                                <p class="text-3xl font-bold text-gray-800">24</p>
+                                <p class="text-sm text-blue-600">85% ocupado</p>
+                            </div>
+                            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-calendar-alt text-purple-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg card-shadow hover-scale">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600">Notificaciones</p>
+                                <p class="text-3xl font-bold text-gray-800">7</p>
+                                <p class="text-sm text-red-600">3 urgentes</p>
+                            </div>
+                            <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-lg card-shadow">
+                        <h3 class="text-lg font-semibold mb-4">Ingresos Mensuales</h3>
+                        <div class="relative h-64">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg card-shadow">
+                        <h3 class="text-lg font-semibold mb-4">Accesos Rápidos</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <button class="p-4 border rounded-lg hover:bg-gray-50 text-center">
+                                <i class="fas fa-user-plus text-2xl text-blue-600 mb-2"></i>
+                                <p class="text-sm">Nuevo Cliente</p>
+                            </button>
+                            <button class="p-4 border rounded-lg hover:bg-gray-50 text-center">
+                                <i class="fas fa-credit-card text-2xl text-green-600 mb-2"></i>
+                                <p class="text-sm">Registrar Pago</p>
+                            </button>
+                            <button class="p-4 border rounded-lg hover:bg-gray-50 text-center">
+                                <i class="fas fa-calendar-plus text-2xl text-purple-600 mb-2"></i>
+                                <p class="text-sm">Reservar Clase</p>
+                            </button>
+                            <button class="p-4 border rounded-lg hover:bg-gray-50 text-center">
+                                <i class="fas fa-file-export text-2xl text-orange-600 mb-2"></i>
+                                <p class="text-sm">Exportar Reporte</p>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 bg-white rounded-lg card-shadow">
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold mb-4">Próximas Clases</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="border-b">
+                                        <th class="text-left py-2">Clase</th>
+                                        <th class="text-left py-2">Horario</th>
+                                        <th class="text-left py-2">Entrenador</th>
+                                        <th class="text-left py-2">Cupos</th>
+                                        <th class="text-left py-2">Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b">
+                                        <td class="py-3">Zumba</td>
+                                        <td class="py-3">10:00 AM</td>
+                                        <td class="py-3">María García</td>
+                                        <td class="py-3">15/20</td>
+                                        <td class="py-3">
+                                            <button class="text-blue-600 hover:text-blue-800">Reservar</button>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b">
+                                        <td class="py-3">CrossFit</td>
+                                        <td class="py-3">11:30 AM</td>
+                                        <td class="py-3">Carlos López</td>
+                                        <td class="py-3">8/12</td>
+                                        <td class="py-3">
+                                            <button class="text-blue-600 hover:text-blue-800">Reservar</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3">Yoga</td>
+                                        <td class="py-3">2:00 PM</td>
+                                        <td class="py-3">Ana Martínez</td>
+                                        <td class="py-3">20/25</td>
+                                        <td class="py-3">
+                                            <button class="text-blue-600 hover:text-blue-800">Reservar</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="clientes-section" class="section-content hidden">
+                <div class="bg-white rounded-lg card-shadow">
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-semibold">Gestión de Clientes</h3>
+                            <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                                <i class="fas fa-plus mr-2"></i>Nuevo Cliente
+                            </button>
+                        </div>
+                        
+                        <div class="mb-4 flex space-x-4">
+                            <input type="text" placeholder="Buscar cliente..." class="flex-1 px-4 py-2 border rounded-lg">
+                            <select class="px-4 py-2 border rounded-lg">
+                                <option>Todos los estados</option>
+                                <option>Activo</option>
+                                <option>Inactivo</option>
+                            </select>
+                        </div>
+                        
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="border-b">
+                                        <th class="text-left py-2">ID</th>
+                                        <th class="text-left py-2">Nombre</th>
+                                        <th class="text-left py-2">Documento</th>
+                                        <th class="text-left py-2">Contacto</th>
+                                        <th class="text-left py-2">Membresía</th>
+                                        <th class="text-left py-2">Estado</th>
+                                        <th class="text-left py-2">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b">
+                                        <td class="py-3">#001</td>
+                                        <td class="py-3">
+                                            <div class="flex items-center">
+                                                <img src="https://via.placeholder.com/32x32" class="w-8 h-8 rounded-full mr-2">
+                                                Juan Pérez
+                                            </div>
+                                        </td>
+                                        <td class="py-3">12345678</td>
+                                        <td class="py-3">3001234567</td>
+                                        <td class="py-3">Pro Mensual</td>
+                                        <td class="py-3">
+                                            <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">Activo</span>
+                                        </td>
+                                        <td class="py-3">
+                                            <button class="text-blue-600 hover:text-blue-800 mr-2">Editar</button>
+                                            <button class="text-red-600 hover:text-red-800">Eliminar</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="recepcion-section" class="section-content hidden">
+                <div class="bg-white rounded-lg card-shadow">
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold mb-4">Check-in de Clientes</h3>
+                        
+                        <div class="mb-6">
+                            <input type="text" placeholder="Buscar por nombre, QR o tarjeta..." 
+                                    class="w-full px-4 py-3 border rounded-lg text-lg">
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="border rounded-lg p-4">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h4 class="font-semibold">Juan Pérez</h4>
+                                        <p class="text-sm text-gray-600">Membresía: Pro Mensual</p>
+                                        <p class="text-sm text-gray-600">Vence: 15/12/2024</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">Activo</span>
+                                        <button class="mt-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                                            Check-in
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="membresias-section" class="section-content hidden">
+                <div class="bg-white rounded-lg card-shadow p-6">
+                    <h3 class="text-lg font-semibold mb-4">Gestión de Membresías</h3>
+                    <p class="text-gray-600">Contenido de membresías y pagos...</p>
+                </div>
+            </div>
+
+            <div id="clases-section" class="section-content hidden">
+                <div class="bg-white rounded-lg card-shadow p-6">
+                    <h3 class="text-lg font-semibold mb-4">Calendario de Clases</h3>
+                    <p class="text-gray-600">Contenido de clases y reservas...</p>
+                </div>
+            </div>
+
+            <div id="entrenadores-section" class="section-content hidden">
+                <div class="bg-white rounded-lg card-shadow p-6">
+                    <h3 class="text-lg font-semibold mb-4">Gestión de Entrenadores</h3>
+                    <p class="text-gray-600">Contenido de entrenadores...</p>
+                </div>
+            </div>
+
+            <div id="rutinas-section" class="section-content hidden">
+                <div class="bg-white rounded-lg card-shadow p-6">
+                    <h3 class="text-lg font-semibold mb-4">Rutinas y Programas</h3>
+                    <p class="text-gray-600">Contenido de rutinas...</p>
+                </div>
+            </div>
+
+            <div id="nutricion-section" class="section-content hidden">
+                <div class="bg-white rounded-lg card-shadow p-6">
+                    <h3 class="text-lg font-semibold mb-4">Planes Nutricionales</h3>
+                    <p class="text-gray-600">Contenido de nutrición...</p>
+                </div>
+            </div>
+
+            <div id="tienda-section" class="section-content hidden">
+                <div class="bg-white rounded-lg card-shadow p-6">
+                    <h3 class="text-lg font-semibold mb-4">Tienda e Inventario</h3>
+                    <p class="text-gray-600">Contenido de tienda...</p>
+                </div>
+            </div>
+
+            <div id="incidentes-section" class="section-content hidden">
+                <div class="bg-white rounded-lg card-shadow p-6">
+                    <h3 class="text-lg font-semibold mb-4">Registro de Incidentes</h3>
+                    <p class="text-gray-600">Contenido de incidentes...</p>
+                </div>
+            </div>
+
+            <div id="admin-section" class="section-content hidden">
+                <div class="bg-white rounded-lg card-shadow p-6">
+                    <h3 class="text-lg font-semibold mb-4">Administración y Roles</h3>
+                    <p class="text-gray-600">Contenido de administración...</p>
+                </div>
+            </div>
+
+            <div id="configuracion-section" class="section-content hidden">
+                <div class="bg-white rounded-lg card-shadow p-6">
+                    <h3 class="text-lg font-semibold mb-4">Configuración del Sistema</h3>
+                    <p class="text-gray-600">Contenido de configuración...</p>
+                </div>
+            </div>
+
+            <div id="ayuda-section" class="section-content hidden">
+                <div class="bg-white rounded-lg card-shadow p-6">
+                    <h3 class="text-lg font-semibold mb-4">Centro de Ayuda</h3>
+                    <p class="text-gray-600">Contenido de ayuda y soporte...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="qrModal" class="fixed inset-0 bg-black bg-opacity-50 hidden modal-backdrop z-50">
+        <div class="flex items-center justify-center h-full">
+            <div class="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
+                <h3 class="text-lg font-semibold mb-4">Credencial QR</h3>
+                <div class="text-center">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=CLIENT123" 
+                            alt="QR Code" class="mx-auto mb-4 qr-code">
+                    <p class="text-sm text-gray-600">Escanea este código para verificar la membresía</p>
+                </div>
+                <div class="mt-4 flex justify-end">
+                    <button onclick="closeQRModal()" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">
+                        Cerrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation
+        const navItems = document.querySelectorAll('.nav-item');
+        const sections = document.querySelectorAll('.section-content');
+        const sectionTitle = document.getElementById('section-title');
+
+        navItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Remove active class from all nav items
+                navItems.forEach(nav => nav.classList.remove('bg-gray-800'));
+                
+                // Add active class to clicked item
+                item.classList.add('bg-gray-800');
+                
+                // Hide all sections
+                sections.forEach(section => section.classList.add('hidden'));
+                
+                // Show selected section
+                const sectionName = item.getAttribute('data-section');
+                const targetSection = document.getElementById(`${sectionName}-section`);
+                if (targetSection) {
+                    targetSection.classList.remove('hidden');
+                    sectionTitle.textContent = item.querySelector('span').textContent;
+                }
+            });
+        });
+
+        // Sidebar toggle
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('main-content');
+
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('w-64');
+            sidebar.classList.toggle('w-16');
+            mainContent.classList.toggle('ml-64');
+            mainContent.classList.toggle('ml-16');
+            
+            // Hide/show text in sidebar
+            const spans = sidebar.querySelectorAll('span');
+            spans.forEach(span => span.classList.toggle('hidden'));
+        });
+
+        // Revenue Chart
+        const ctx = document.getElementById('revenueChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Ingresos',
+                    data: [12000, 19000, 15000, 25000, 22000, 30000],
+                    borderColor: 'rgb(99, 102, 241)',
+                    backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // QR Modal functions
+        function openQRModal() {
+            document.getElementById('qrModal').classList.remove('hidden');
+        }
+
+        function closeQRModal() {
+            document.getElementById('qrModal').classList.add('hidden');
+        }
+
+        // Close modal on backdrop click
+        document.getElementById('qrModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeQRModal();
+            }
+        });
+    </script>
+</body>
+</html>

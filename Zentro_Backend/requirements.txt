@@ -8,3 +8,4 @@ python-jose
 email-validator
 passlib[bcrypt]
 cryptography
+Flask
