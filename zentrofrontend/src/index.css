@@ -1,0 +1,35 @@
+/* src/index.css - coloca TODOS los @import primero */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+
+/* ahora capas y reglas Tailwind / custom */
+@layer base {
+  html, body {
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+/* Componentes personalizados en la capa components */
+@layer components {
+  .card-shadow {
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+  }
+  .notification-badge { animation: pulse 2s infinite; }
+  .qr-code { image-rendering: pixelated; }
+}
+
+/* Si quieres utilidades personalizadas: */
+@layer utilities {
+  .sidebar-transition { transition: all 0.3s ease; }
+  .content-transition { transition: margin-left 0.3s ease; }
+  .hover-scale { transition: transform 0.2s ease; }
+  .hover-scale:hover { transform: scale(1.02); }
+}
+
+/* Keyframes fuera de @layer si lo prefieres */
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(239,68,68,0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(239,68,68,0); }
+  100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); }
+}
