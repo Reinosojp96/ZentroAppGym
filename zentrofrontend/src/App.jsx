@@ -1,124 +1,113 @@
 // src/App.jsx
+import React from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import MainLayout from "./components/layout/MainLayout"; // asume que usa Sidebar/Header
+import DashboardPage from "./pages/DashboardPage";
 
-import React, { useState } from 'react';
-import MainLayout from './components/layout/MainLayout';
-// Importa todos los componentes necesarios
-import StatsCard from './components/dashboard/StatsCard';
-import RevenueChart from './components/dashboard/RevenueChart';
-import QuickAccess from './components/dashboard/QuickAccess';
-import CustomersTable from './components/customers/CustomersTable';
-import NewCustomerForm from './components/customers/NewCustomerForm';
+// clientes
+import ClientList from "./components/clientes/ClientList";
+import ClientForm from "./components/clientes/ClientForm";
 
-function App() {
-  const [activeSection, setActiveSection] = useState('dashboard');
-  const [showNewCustomerForm, setShowNewCustomerForm] = useState(false);
+// recepción
+import CheckIn from "./components/recepcion/CheckIn";
+import GuestList from "./components/recepcion/GuestList";
+import MembershipStatus from "./components/recepcion/MembershipStatus";
 
-  // La función handleNavigate ahora se define aquí para cambiar el estado
-  const handleNavigate = (section) => {
-    setActiveSection(section);
-    // Asegúrate de resetear el estado del formulario cuando cambies de sección
-    setShowNewCustomerForm(false);
-  };
+// membresias
+import MembershipList from "./components/membresias/MembershipList";
+import MembershipForm from "./components/membresias/MembershipForm";
+import MembershipAssign from "./components/membresias/MembershipAssign";
 
-  const renderSection = () => {
-    switch (activeSection) {
-      case 'dashboard':
-        return (
-          <div id="dashboard-section" className="section-content">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-              <StatsCard
-                title="Clientes Activos"
-                value="1,247"
-                detail="+12% este mes"
-                icon="fas fa-users"
-                bgColor="bg-blue-100"
-                iconColor="#3b82f6" // blue-600
-              />
-              <StatsCard
-                title="Ingresos del Día"
-                value="$2,450"
-                detail="+8% ayer"
-                icon="fas fa-dollar-sign"
-                bgColor="bg-green-100"
-                iconColor="#22c55e" // green-600
-              />
-              <StatsCard
-                title="Clases Hoy"
-                value="24"
-                detail="85% ocupado"
-                icon="fas fa-calendar-alt"
-                bgColor="bg-purple-100"
-                iconColor="#a855f7" // purple-600
-              />
-              <StatsCard
-                title="Notificaciones"
-                value="7"
-                detail="3 urgentes"
-                icon="fas fa-exclamation-triangle"
-                bgColor="bg-red-100"
-                iconColor="#ef4444" // red-600
-              />
-            </div>
+// clases
+import ClassCalendar from "./components/clases/ClassCalendar";
+import ClassSchedule from "./components/clases/ClassSchedule";
+import ClassBooking from "./components/clases/ClassBooking";
+import ClassForm from "./components/clases/ClassForm";
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <RevenueChart />
-              <QuickAccess />
-            </div>
-          </div>
-        );
-      case 'clientes':
-        return (
-          <div id="clientes-section" className="section-content">
-            <div className="bg-white rounded-lg card-shadow">
-              <div className="p-6">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg font-semibold">Gestión de Clientes</h3>
-                  <button 
-                    onClick={() => setShowNewCustomerForm(true)}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-                  >
-                    <i className="fas fa-plus mr-2"></i>Nuevo Cliente
-                  </button>
-                </div>
-                {showNewCustomerForm ? (
-                  <NewCustomerForm onClose={() => setShowNewCustomerForm(false)} />
-                ) : (
-                  <>
-                    <div className="mb-4 flex space-x-4">
-                      <input type="text" placeholder="Buscar cliente..." className="flex-1 px-4 py-2 border rounded-lg" />
-                      <select className="px-4 py-2 border rounded-lg">
-                        <option>Todos los estados</option>
-                        <option>Activo</option>
-                        <option>Inactivo</option>
-                      </select>
-                    </div>
-                    <CustomersTable />
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
-        );
-      case 'pagos':
-        return <div id="pagos-section" className="section-content">Gestión de Pagos...</div>;
-      case 'clases':
-        return <div id="clases-section" className="section-content">Horarios de Clases...</div>;
-      case 'reportes':
-        return <div id="reportes-section" className="section-content">Generación de Reportes...</div>;
-      case 'recepcion':
-        return <div id="recepcion-section" className="section-content">Control de Acceso...</div>;
-      case 'ajustes':
-        return <div id="ajustes-section" className="section-content">Configuración de la Aplicación...</div>;
-      default:
-        return null;
-    }
-  };
+// entrenadores
+import TrainerList from "./components/entrenadores/TrainerList";
+import TrainerProfile from "./components/entrenadores/TrainerProfile";
+import TrainerForm from "./components/entrenadores/TrainerForm";
 
+// rutinas
+import RoutineList from "./components/rutinas/RoutineList";
+import RoutineBuilder from "./components/rutinas/RoutineBuilder";
+import ExerciseLibrary from "./components/rutinas/ExerciseLibrary";
+
+// nutricion
+import NutritionPlanList from "./components/nutricion/NutritionPlanList";
+import DietForm from "./components/nutricion/DietForm";
+import FoodDatabase from "./components/nutricion/FoodDatabase";
+
+// tienda
+import ProductList from "./components/tienda/ProductList";
+import ProductForm from "./components/tienda/ProductForm";
+import POS from "./components/tienda/POS";
+
+// incidentes
+import IncidentList from "./components/incidentes/IncidentList";
+import IncidentForm from "./components/incidentes/IncidentForm";
+import IncidentDetail from "./components/incidentes/IncidentDetail";
+
+// administracion
+import UserList from "./components/administracion/users/UserList";
+import UserForm from "./components/administracion/users/UserForm";
+import RoleManagement from "./components/administracion/roles/RoleManagement";
+import PermissionList from "./components/administracion/permisos/PermissionList";
+
+export default function App() {
   return (
-    <MainLayout activeSection={activeSection} onNavigate={handleNavigate}>
-      {renderSection()}
-    </MainLayout>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<MainLayout />}>
+          <Route index element={<DashboardPage />} />
+
+          <Route path="clientes" element={<ClientList />} />
+          <Route path="clientes/nuevo" element={<ClientForm />} />
+          <Route path="clientes/:id" element={<ClientForm />} />
+
+          <Route path="recepcion/checkin" element={<CheckIn />} />
+          <Route path="recepcion/guestlist" element={<GuestList />} />
+          <Route path="recepcion/status" element={<MembershipStatus />} />
+
+          <Route path="membresias" element={<MembershipList />} />
+          <Route path="membresias/nuevo" element={<MembershipForm />} />
+          <Route path="membresias/asignar" element={<MembershipAssign />} />
+
+          <Route path="clases/calendar" element={<ClassCalendar />} />
+          <Route path="clases/schedule" element={<ClassSchedule />} />
+          <Route path="clases/book" element={<ClassBooking />} />
+          <Route path="clases/nuevo" element={<ClassForm />} />
+
+          <Route path="entrenadores" element={<TrainerList />} />
+          <Route path="entrenadores/:id" element={<TrainerProfile />} />
+          <Route path="entrenadores/nuevo" element={<TrainerForm />} />
+
+          <Route path="rutinas" element={<RoutineList />} />
+          <Route path="rutinas/builder" element={<RoutineBuilder />} />
+          <Route path="rutinas/library" element={<ExerciseLibrary />} />
+
+          <Route path="nutricion" element={<NutritionPlanList />} />
+          <Route path="nutricion/diet" element={<DietForm />} />
+          <Route path="nutricion/foods" element={<FoodDatabase />} />
+
+          <Route path="tienda" element={<ProductList />} />
+          <Route path="tienda/nuevo" element={<ProductForm />} />
+          <Route path="tienda/pos" element={<POS />} />
+
+          <Route path="incidentes" element={<IncidentList />} />
+          <Route path="incidentes/nuevo" element={<IncidentForm />} />
+          <Route path="incidentes/:id" element={<IncidentDetail />} />
+
+          <Route path="admin/users" element={<UserList />} />
+          <Route path="admin/users/nuevo" element={<UserForm />} />
+          <Route path="admin/roles" element={<RoleManagement />} />
+          <Route path="admin/permisos" element={<PermissionList />} />
+
+          {/* fallback */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
-
-export default App;

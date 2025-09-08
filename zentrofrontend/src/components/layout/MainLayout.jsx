@@ -1,36 +1,34 @@
 // src/components/layout/MainLayout.jsx
 import React, { useState } from "react";
+import { Outlet } from "react-router-dom";
 import Sidebar from "../common/Sidebar";
 import Header from "../common/Header";
-import FloatingMenu from "../ui/FloatingMenu"; // opcional si lo usas
 
-export default function MainLayout({ children }) {
+export default function MainLayout() {
+  // controla collapse y pásalo al Sidebar
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <div className="min-h-screen flex bg-gray-50">
-      {/* Sidebar fija */}
+    <div className="min-h-screen bg-gray-50 flex">
+      {/* Sidebar - fijo */}
       <Sidebar
         collapsed={collapsed}
-        onToggle={(next) => setCollapsed((s) => (typeof next === "boolean" ? next : !s))}
+        onToggle={(next) => setCollapsed(next)}
+        // opcional: onNavigate handler si quieres centralizar navegación
       />
 
-      {/* Contenido: margen a la izquierda igual al ancho de la sidebar */}
+      {/* Contenedor principal: header + contenido */}
       <div
-        className={`flex-1 transition-all duration-300 ${collapsed ? "ml-16" : "ml-64"}`}
-        style={{ minHeight: "100vh" }}
+        className={`flex-1 min-h-screen transition-all duration-300 ${
+          collapsed ? "lg:ml-16" : "lg:ml-64"
+        }`}
       >
-        {/* Header (no fixed) — si haces fixed ajusta el padding-top) */}
-        <Header onToggleSidebar={() => setCollapsed((s) => !s)} />
-
-        {/* main con padding si quieres */}
+        <Header />
         <main className="p-6">
-          {children}
+          {/* Aquí renderizan las rutas hijas */}
+          <Outlet />
         </main>
       </div>
-
-      {/* Floating menu opcional (esquina inferior derecha) */}
-      <FloatingMenu />
     </div>
   );
 }
