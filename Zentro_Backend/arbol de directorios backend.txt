@@ -1,0 +1,94 @@
+zentro_backend
+├─ backend
+│  ├─ app
+│  │  ├─ api
+│  │  │  └─ v1
+│  │  │     ├─ api.py              # Nuevo: Router principal
+│  │  │     ├─ auth.py             # Nuevo: Rutas de autenticación
+│  │  │     ├─ users.py
+│  │  │     ├─ clients.py
+│  │  │     ├─ trainers.py
+│  │  │     ├─ memberships.py
+│  │  │     ├─ classes.py
+│  │  │     ├─ routines.py
+│  │  │     ├─ nutrition.py
+│  │  │     ├─ store.py
+│  │  │     ├─ incidents.py
+│  │  │     ├─ reception.py
+│  │  │     ├─ roles.py
+│  │  │     ├─ permissions.py
+│  │  │     └─ __init__.py
+│  │  │
+│  │  ├─ core
+│  │  │    ├─ config.py
+│  │  │    ├─ security.py
+│  │  │    └─ dependencies.py
+│  │  │
+│  │  ├─ dao
+│  │  │    ├─ user_dao.py
+│  │  │    ├─ client_dao.py
+│  │  │    ├─ trainer_dao.py
+│  │  │    ├─ membership_dao.py
+│  │  │    ├─ class_dao.py
+│  │  │    ├─ routine_dao.py
+│  │  │    ├─ nutrition_dao.py
+│  │  │    ├─ store_dao.py
+│  │  │    ├─ incident_dao.py
+│  │  │    ├─ reception_dao.py
+│  │  │    ├─ role_dao.py
+│  │  │    └─ permission_dao.py
+│  │  │
+│  │  ├─ db
+│  │  │    ├─ base_class.py
+│  │  │    ├─ session.py
+│  │  │    └─ init_db.py          # Nuevo
+│  │  │
+│  │  ├─ models
+│  │  │    ├─ user.py
+│  │  │    ├─ client.py
+│  │  │    ├─ trainer.py
+│  │  │    ├─ membership.py
+│  │  │    ├─ gym_class.py
+│  │  │    ├─ routine.py
+│  │  │    ├─ nutrition.py
+│  │  │    ├─ product.py
+│  │  │    ├─ incident.py
+│  │  │    ├─ reception.py
+│  │  │    ├─ role.py
+│  │  │    └─ permission.py
+│  │  │
+│  │  ├─ schemas
+│  │  │    ├─ auth_schema.py        # Nuevo
+│  │  │    ├─ user_schema.py
+│  │  │    ├─ client_schema.py
+│  │  │    ├─ trainer_schema.py
+│  │  │    ├─ membership_schema.py
+│  │  │    ├─ class_schema.py
+│  │  │    ├─ routine_schema.py
+│  │  │    ├─ nutrition_schema.py
+│  │  │    ├─ product_schema.py
+│  │  │    ├─ incident_schema.py
+│  │  │    ├─ reception_schema.py
+│  │  │    ├─ role_schema.py
+│  │  │    └─ permission_schema.py
+│  │  │
+│  │  ├─ services
+│  │  │    ├─ user_service.py
+│  │  │    ├─ client_service.py
+│  │  │    ├─ trainer_service.py
+│  │  │    ├─ membership_service.py
+│  │  │    ├─ class_service.py
+│  │  │    ├─ routine_service.py
+│  │  │    ├─ nutrition_service.py
+│  │  │    ├─ store_service.py
+│  │  │    ├─ incident_service.py
+│  │  │    ├─ reception_service.py
+│  │  │    ├─ role_service.py
+│  │  │    └─ permission_service.py
+│  │  │
+│  │  ├─ main.py
+│  │  └─ __init__.py
+│  │
+│  └─ README.md
+│
+└─ requirements.txt

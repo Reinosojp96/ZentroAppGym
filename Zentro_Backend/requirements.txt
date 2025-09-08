@@ -9,3 +9,8 @@ email-validator
 passlib[bcrypt]
 cryptography
 Flask
+pydantic
+python-jose[cryptography]
+mysql-connector-python
+psycopg2-binary
+alembic
