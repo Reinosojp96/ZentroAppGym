@@ -1,0 +1,50 @@
+/src
+├── components/
+│   ├── common/
+│   │   ├── Sidebar.jsx
+│   │   └── Header.jsx
+│   ├── clientes/
+│   │   ├── ClientList.jsx          // Muestra la tabla de clientes.
+│   │   └── ClientForm.jsx          // Formulario para crear o editar un cliente.
+│   ├── recepcion/
+│   │   ├── CheckIn.jsx             // Componente para el registro de entrada de clientes.
+│   │   ├── GuestList.jsx           // Muestra los visitantes o clientes actuales.
+│   │   └── MembershipStatus.jsx    // Muestra el estado de la membresía al hacer check-in.
+│   ├── membresias/
+│   │   ├── MembershipList.jsx      // Lista las membresías disponibles.
+│   │   ├── MembershipForm.jsx      // Formulario para crear o editar un tipo de membresía.
+│   │   └── MembershipAssign.jsx    // Componente para asignar una membresía a un cliente.
+│   ├── clases/
+│   │   ├── ClassCalendar.jsx       // Vista de calendario con las clases programadas.
+│   │   ├── ClassSchedule.jsx       // Muestra los horarios y cupos de las clases.
+│   │   ├── ClassBooking.jsx        // Permite a los clientes reservar una clase.
+│   │   └── ClassForm.jsx           // Formulario para crear o editar una clase.
+│   ├── entrenadores/
+│   │   ├── TrainerList.jsx         // Muestra la lista de entrenadores.
+│   │   ├── TrainerProfile.jsx      // Vista detallada de un entrenador.
+│   │   └── TrainerForm.jsx         // Formulario para crear o editar un entrenador.
+│   ├── rutinas/
+│   │   ├── RoutineList.jsx         // Lista de rutinas de ejercicio predefinidas.
+│   │   ├── RoutineBuilder.jsx      // Herramienta para crear rutinas personalizadas.
+│   │   └── ExerciseLibrary.jsx     // Componente con un catálogo de ejercicios.
+│   ├── nutricion/
+│   │   ├── NutritionPlanList.jsx   // Muestra los planes de nutrición.
+│   │   ├── DietForm.jsx            // Formulario para crear o asignar una dieta.
+│   │   └── FoodDatabase.jsx        // Catálogo de alimentos.
+│   ├── tienda/
+│   │   ├── ProductList.jsx         // Muestra los productos en venta.
+│   │   ├── ProductForm.jsx         // Formulario para añadir o editar un producto.
+│   │   └── POS.jsx                 // Punto de venta, para registrar transacciones.
+│   ├── incidentes/
+│   │   ├── IncidentList.jsx        // Lista de incidentes o reportes.
+│   │   ├── IncidentForm.jsx        // Formulario para reportar un nuevo incidente.
+│   │   └── IncidentDetail.jsx      // Muestra el detalle y seguimiento de un incidente.
+│   └── administracion/
+│       ├── users/
+│       │   ├── UserList.jsx        // Lista de usuarios con roles y permisos.
+│       │   └── UserForm.jsx        // Formulario para crear o editar un usuario.
+│       ├── roles/
+│       │   └── RoleManagement.jsx  // Gestor de roles.
+│       └── permisos/
+│           └── PermissionList.jsx  // Componente para asignar permisos.
+└── ... (otros directorios como 'pages', 'services', etc.)

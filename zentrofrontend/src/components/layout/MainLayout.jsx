@@ -1,44 +1,36 @@
 // src/components/layout/MainLayout.jsx
+import React, { useState } from "react";
+import Sidebar from "../common/Sidebar";
+import Header from "../common/Header";
+import FloatingMenu from "../ui/FloatingMenu"; // opcional si lo usas
 
-import React from 'react';
-import Sidebar from '../common/Sidebar';
-import Header from '../common/Header';
-
-function MainLayout({ children, activeSection, onNavigate }) {
-  const getSectionTitle = (section) => {
-    switch(section) {
-      case 'dashboard':
-        return 'Dashboard';
-      case 'clientes':
-        return 'Gestión de Clientes';
-      case 'pagos':
-        return 'Pagos';
-      case 'clases':
-        return 'Clases';
-      case 'reportes':
-        return 'Reportes';
-      case 'recepcion':
-        return 'Recepción';
-      case 'ajustes':
-        return 'Ajustes';
-      default:
-        return 'Dashboard';
-    }
-  };
-
-  const sectionTitle = getSectionTitle(activeSection);
+export default function MainLayout({ children }) {
+  const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <div className="flex bg-gray-100 min-h-screen">
-      <Sidebar activeSection={activeSection} onNavigate={onNavigate} />
-      <div className="flex-1 flex flex-col">
-        <Header sectionTitle={sectionTitle} />
-        <main className="flex-1 p-6 overflow-y-auto">
+    <div className="min-h-screen flex bg-gray-50">
+      {/* Sidebar fija */}
+      <Sidebar
+        collapsed={collapsed}
+        onToggle={(next) => setCollapsed((s) => (typeof next === "boolean" ? next : !s))}
+      />
+
+      {/* Contenido: margen a la izquierda igual al ancho de la sidebar */}
+      <div
+        className={`flex-1 transition-all duration-300 ${collapsed ? "ml-16" : "ml-64"}`}
+        style={{ minHeight: "100vh" }}
+      >
+        {/* Header (no fixed) — si haces fixed ajusta el padding-top) */}
+        <Header onToggleSidebar={() => setCollapsed((s) => !s)} />
+
+        {/* main con padding si quieres */}
+        <main className="p-6">
           {children}
         </main>
       </div>
+
+      {/* Floating menu opcional (esquina inferior derecha) */}
+      <FloatingMenu />
     </div>
   );
 }
-
-export default MainLayout;
