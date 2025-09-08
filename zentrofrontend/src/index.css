@@ -54,3 +54,21 @@
 .sidebar-scroll::-webkit-scrollbar-thumb:hover {
   background: rgba(255,255,255,0.2);
 }
+
+
+
+
+/* Card shadow y efecto hover (puedes mover a tailwind.config si prefieres) */
+.card-shadow {
+  box-shadow: 0 6px 18px rgba(13, 16, 23, 0.06), 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+
+/* ligero grow al hover para dar sensación de interactividad */
+.hover-scale {
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.hover-scale:hover {
+  transform: translateY(-3px);
+}
+
+/* si usas clases de color en StatsCard (bg-blue-50 por ejemplo) Tailwind lo resuelve; si no, define bg helpers */
