@@ -4,7 +4,7 @@ Servicio para manejar planes. Este servicio intentará usar un modelo Plan si ex
 (`app.models.plan.Plan`). Si no existe, cae usando `app.models.membership.Membership`
 como fallback (si el proyecto guarda planes en la tabla memberships).
 """
-from typing import List, Optional
+from typing import Any,List, Optional
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 

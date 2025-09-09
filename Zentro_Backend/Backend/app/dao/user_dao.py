@@ -11,7 +11,7 @@ from app.models.user import User
 from app.schemas.user_schema import UserCreate, UserUpdate
 
 
-class UserDao(DaoBase[User, UserCreate, UserUpdate]):
+class user_dao(DaoBase[User, UserCreate, UserUpdate]):
     def __init__(self):
         super().__init__(User)
 

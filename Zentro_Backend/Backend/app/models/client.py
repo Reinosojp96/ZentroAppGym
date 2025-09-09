@@ -38,7 +38,7 @@ class Client(Base):
     
     # Relaciones uno a muchos
     routines = relationship("Routine", back_populates="client", cascade="all, delete-orphan")
-    nutrition_plans = relationship("NutritionPlan", back_populates="client", cascade="all, delete-orphan")
+    nutrition_plans = relationship("Nutrition", back_populates="client", cascade="all, delete-orphan")
     reception_logs = relationship("ReceptionLog", back_populates="client", cascade="all, delete-orphan")
     
     # Relación con la membresía actual

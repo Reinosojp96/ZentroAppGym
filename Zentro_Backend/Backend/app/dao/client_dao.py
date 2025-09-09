@@ -6,7 +6,7 @@ from app.dao.dao_base import DaoBase
 from app.models.client import Client
 from app.schemas.client_schema import ClientCreate, ClientUpdate
 
-class ClientDao(DaoBase[Client, ClientCreate, ClientUpdate]):
+class client_dao(DaoBase[Client, ClientCreate, ClientUpdate]):
     def __init__(self):
         super().__init__(Client)
 

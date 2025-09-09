@@ -6,6 +6,6 @@ from app.dao.dao_base import DaoBase
 from app.models.nutrition import Nutrition
 from app.schemas.nutrition_schema import NutritionCreate, NutritionUpdate
 
-class NutritionDao(DaoBase[Nutrition, NutritionCreate, NutritionUpdate]):
+class nutrition_dao(DaoBase[Nutrition, NutritionCreate, NutritionUpdate]):
     def __init__(self):
         super().__init__(Nutrition)

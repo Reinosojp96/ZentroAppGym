@@ -5,7 +5,7 @@ from app.models.incident import Incident
 from app.schemas.incident_schema import IncidentCreate, IncidentUpdate
 from typing import List, Optional
 
-class IncidentDAO:
+class incident_dao:
     def get_incident_by_id(self, db: Session, incident_id: int) -> Optional[Incident]:
         """
         Obtiene un incidente específico por su ID.

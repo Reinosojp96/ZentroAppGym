@@ -6,6 +6,6 @@ from app.dao.dao_base import DaoBase
 from app.models.product import Product
 from app.schemas.product_schema import ProductCreate, ProductUpdate
 
-class ProductDao(DaoBase[Product, ProductCreate, ProductUpdate]):
+class product_dao(DaoBase[Product, ProductCreate, ProductUpdate]):
     def __init__(self):
         super().__init__(Product)

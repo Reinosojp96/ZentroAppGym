@@ -28,7 +28,7 @@
 │   │   ├── RoutineBuilder.jsx      // Herramienta para crear rutinas personalizadas.
 │   │   └── ExerciseLibrary.jsx     // Componente con un catálogo de ejercicios.
 │   ├── nutricion/
-│   │   ├── NutritionPlanList.jsx   // Muestra los planes de nutrición.
+│   │   ├── NutritionList.jsx   // Muestra los planes de nutrición.
 │   │   ├── DietForm.jsx            // Formulario para crear o asignar una dieta.
 │   │   └── FoodDatabase.jsx        // Catálogo de alimentos.
 │   ├── tienda/

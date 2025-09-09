@@ -5,7 +5,7 @@ from app.models.reception import Reception
 from app.schemas.reception_schema import ReceptionCreate, ReceptionUpdate
 from typing import List, Optional
 
-class ReceptionDAO:
+class reception_dao:
     def get_reception_log_by_id(self, db: Session, log_id: int) -> Optional[Reception]:
         """
         Obtiene un registro de recepción específico por su ID.

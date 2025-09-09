@@ -6,6 +6,6 @@ from app.dao.dao_base import DaoBase
 from app.models.routine import Routine
 from app.schemas.routine_schema import RoutineCreate, RoutineUpdate
 
-class RoutineDao(DaoBase[Routine, RoutineCreate, RoutineUpdate]):
+class routine_dao(DaoBase[Routine, RoutineCreate, RoutineUpdate]):
     def __init__(self):
         super().__init__(Routine)

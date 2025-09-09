@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 
 from app.core.dependencies import get_current_active_user, get_db
 from app.models.user import User as UserModel
-from app.schemas.class_schema import GymClass, GymClassCreate, GymClassUpdate
+from app.schemas.class_schema import GymClass, ClassCreate, ClassUpdate
 from app.services import class_service
 
 router = APIRouter(prefix="/classes", tags=["classes"])
@@ -18,7 +18,7 @@ router = APIRouter(prefix="/classes", tags=["classes"])
 def create_class(
     *,
     db: Session = Depends(get_db),
-    class_in: GymClassCreate,
+    class_in: ClassCreate,
     current_user: UserModel = Depends(get_current_active_user)
 ) -> Any:
     """
@@ -59,7 +59,7 @@ def update_class(
     *,
     db: Session = Depends(get_db),
     class_id: int,
-    class_in: GymClassUpdate,
+    class_in: ClassUpdate,
     current_user: UserModel = Depends(get_current_active_user)
 ) -> Any:
     """

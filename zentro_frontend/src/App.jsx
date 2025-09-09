@@ -35,7 +35,7 @@ import RoutineBuilder from "./components/rutinas/RoutineBuilder";
 import ExerciseLibrary from "./components/rutinas/ExerciseLibrary";
 
 // nutricion
-import NutritionPlanList from "./components/nutricion/NutritionPlanList";
+import NutritionList from "./components/nutricion/NutritionList";
 import DietForm from "./components/nutricion/DietForm";
 import FoodDatabase from "./components/nutricion/FoodDatabase";
 
@@ -87,7 +87,7 @@ export default function App() {
           <Route path="rutinas/builder" element={<RoutineBuilder />} />
           <Route path="rutinas/library" element={<ExerciseLibrary />} />
 
-          <Route path="nutricion" element={<NutritionPlanList />} />
+          <Route path="nutricion" element={<NutritionList />} />
           <Route path="nutricion/diet" element={<DietForm />} />
           <Route path="nutricion/foods" element={<FoodDatabase />} />
 

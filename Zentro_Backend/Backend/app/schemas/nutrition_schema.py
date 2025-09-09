@@ -7,23 +7,23 @@ class Meal(BaseModel):
     description: str
     calories: Optional[int] = None
 
-class NutritionPlanBase(BaseModel):
+class NutritionBase(BaseModel):
     name: str
     description: Optional[str] = None
     client_id: int
     trainer_id: int
     meals: List[Meal] = []
 
-class NutritionPlanCreate(NutritionPlanBase):
+class NutritionCreate(NutritionBase):
     pass
 
-class NutritionPlanUpdate(BaseModel):
+class NutritionUpdate(BaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
     meals: Optional[List[Meal]] = None
 
-class NutritionPlan(NutritionPlanBase):
+class Nutrition(NutritionBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True

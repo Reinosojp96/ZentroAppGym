@@ -1,6 +1,6 @@
 # backend/app/models/nutrition.py
 """
-Define el modelo NutritionPlan, que representa un plan de dieta y nutrición
+Define el modelo Nutrition, que representa un plan de dieta y nutrición
 diseñado por un entrenador para un cliente.
 """
 import enum
@@ -16,7 +16,7 @@ class PlanStatus(str, enum.Enum):
     COMPLETED = "Completado"
     ARCHIVED = "Archivado"
 
-class NutritionPlan(Base):
+class Nutrition(Base):
     __tablename__ = "nutrition_plans"
 
     id = Column(Integer, primary_key=True, index=True)

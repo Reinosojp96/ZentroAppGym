@@ -8,7 +8,7 @@ class Permission(BaseModel):
     name: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class RoleBase(BaseModel):
     name: str
@@ -26,5 +26,5 @@ class Role(RoleBase):
     permissions: List[Permission] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 

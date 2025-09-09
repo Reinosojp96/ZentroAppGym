@@ -2,9 +2,10 @@
 """
 Servicio para roles: CRUD y asignación de permisos.
 """
-from typing import List, Optional
+from typing import Any,List, Optional
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
+
 
 try:
     from app.models.role import Role

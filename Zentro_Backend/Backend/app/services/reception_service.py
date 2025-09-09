@@ -4,7 +4,7 @@ Servicio para recepciones: check-in de clientes, listar entradas, validar membre
 Asume existencia de app.models.reception.Reception y app.models.client.Client
 y app.models.membership.Membership para validar estados.
 """
-from typing import List, Optional
+from typing import Any,List, Optional
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 import datetime

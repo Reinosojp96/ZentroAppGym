@@ -8,17 +8,17 @@ from sqlalchemy.orm import Session
 
 from app.core.dependencies import get_current_active_user, get_db
 from app.models.user import User as UserModel
-from app.schemas.nutrition_schema import NutritionPlan, NutritionPlanCreate, NutritionPlanUpdate
+from app.schemas.nutrition_schema import Nutrition, NutritionCreate, NutritionUpdate
 from app.services import nutrition_service
 
 router = APIRouter(prefix="/nutrition", tags=["nutrition"])
 
 
-@router.post("/", response_model=NutritionPlan, status_code=status.HTTP_201_CREATED)
+@router.post("/", response_model=Nutrition, status_code=status.HTTP_201_CREATED)
 def create_nutrition_plan(
     *,
     db: Session = Depends(get_db),
-    nutrition_in: NutritionPlanCreate,
+    nutrition_in: NutritionCreate,
     current_user: UserModel = Depends(get_current_active_user)
 ) -> Any:
     """
@@ -27,7 +27,7 @@ def create_nutrition_plan(
     return nutrition_service.create_nutrition_plan(db=db, nutrition_plan=nutrition_in)
 
 
-@router.get("/", response_model=List[NutritionPlan])
+@router.get("/", response_model=List[Nutrition])
 def read_nutrition_plans(
     db: Session = Depends(get_db),
     skip: int = 0,
@@ -40,7 +40,7 @@ def read_nutrition_plans(
     return nutrition_service.get_nutrition_plans(db, skip=skip, limit=limit)
 
 
-@router.get("/{nutrition_id}", response_model=NutritionPlan)
+@router.get("/{nutrition_id}", response_model=Nutrition)
 def read_nutrition_plan(
     *,
     db: Session = Depends(get_db),
@@ -56,12 +56,12 @@ def read_nutrition_plan(
     return plan
 
 
-@router.put("/{nutrition_id}", response_model=NutritionPlan)
+@router.put("/{nutrition_id}", response_model=Nutrition)
 def update_nutrition_plan(
     *,
     db: Session = Depends(get_db),
     nutrition_id: int,
-    nutrition_in: NutritionPlanUpdate,
+    nutrition_in: NutritionUpdate,
     current_user: UserModel = Depends(get_current_active_user)
 ) -> Any:
     """
@@ -73,7 +73,7 @@ def update_nutrition_plan(
     return nutrition_service.update_nutrition_plan(db=db, db_obj=plan, obj_in=nutrition_in)
 
 
-@router.delete("/{nutrition_id}", response_model=NutritionPlan)
+@router.delete("/{nutrition_id}", response_model=Nutrition)
 def delete_nutrition_plan(
     *,
     db: Session = Depends(get_db),

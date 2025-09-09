@@ -11,10 +11,10 @@ class GymClassBase(BaseModel):
     end_time: datetime.datetime
     max_capacity: int
 
-class GymClassCreate(GymClassBase):
+class ClassCreate(GymClassBase):
     pass
 
-class GymClassUpdate(BaseModel):
+class ClassUpdate(BaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
     trainer_id: Optional[int] = None
@@ -27,4 +27,4 @@ class GymClass(GymClassBase):
     created_at: datetime.datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True

@@ -2,7 +2,7 @@
 """
 Servicio para permisos. CRUD básico más funciones de ayuda.
 """
-from typing import List, Optional
+from typing import Any,List, Optional
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 
