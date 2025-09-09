@@ -1,43 +1,43 @@
-# core/config.py
+"""
+Manejo de la configuración y variables de entorno.
+"""
+import os
+from functools import lru_cache
+from pydantic_settings import BaseSettings
 
-from typing import Optional
-from pydantic import Field
-from pydantic_settings import BaseSettings, SettingsConfigDict
+# Es una buena práctica cargar las variables de entorno desde un archivo .env
+# para facilitar el desarrollo local.
+from dotenv import load_dotenv
+load_dotenv()
 
 
 class Settings(BaseSettings):
     """
-    Clase de configuración del proyecto.
-    
-    Carga variables de entorno desde un archivo .env o del sistema.
-    Usa Pydantic para la validación y tipado de las variables.
+    Clase para gestionar la configuración de la aplicación utilizando Pydantic.
+    Lee las variables de entorno.
     """
-    
-    # Configuración del modelo Pydantic
-    model_config = SettingsConfigDict(
-        env_file=".env",        # Carga variables desde un archivo .env
-        env_file_encoding="utf-8", # Codificación del archivo
-        case_sensitive=True,    # Las claves de las variables son sensibles a mayúsculas
-    )
+    PROJECT_NAME: str = "Zentro SaaS"
+    API_V1_STR: str = "/api/v1"
 
-    # --- Variables de Entorno de la Aplicación ---
-    
-    # Clave secreta para la seguridad de la aplicación (por ejemplo, para JWT)
-    # Pydantic valida que esta variable exista y no esté vacía.
-    SECRET_KEY: str = Field(..., description="Clave secreta para la seguridad de la aplicación.")
-    
-    # Algoritmo de encriptación para los tokens JWT
-    ALGORITHM: str = Field(..., description="Algoritmo de encriptación para los tokens JWT.")
-    
-    # Tiempo de expiración del token de acceso en minutos
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = Field(..., description="Tiempo de expiración del token de acceso en minutos.")
+    # Configuración de la base de datos
+    # La URL de conexión se construye a partir de variables de entorno.
+    # Ejemplo para PostgreSQL: postgresql://user:password@host:port/dbname
+    DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./zentro.db")
 
-    # --- Variables de Entorno de la Base de Datos ---
-    
-    # URL de conexión a la base de datos
-    # Pydantic valida que esta variable exista y no esté vacía.
-    DATABASE_URL: str = Field(..., description="URL de conexión a la base de datos.")
-    
+    # Configuración de seguridad y JWT
+    SECRET_KEY: str = os.getenv("SECRET_KEY", "una_clave_secreta_muy_segura_para_desarrollo")
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30 # El token expira en 30 minutos
 
-# Instancia de configuración que se importará en el resto del proyecto
-settings = Settings()
+    class Config:
+        case_sensitive = True
+        # Si tienes un archivo .env, Pydantic lo leerá automáticamente.
+        # env_file = ".env"
+
+
+# Usamos lru_cache para que la configuración se cargue una sola vez.
+@lru_cache()
+def get_settings():
+    return Settings()
+
+settings = get_settings()
