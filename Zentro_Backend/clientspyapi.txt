@@ -1,0 +1,12 @@
+clients.py/api
+@router.post("/", response_model=Client, status_code=status.HTTP_201_CREATED)
+def create_client(
+    *,
+    db: Session = Depends(get_db),
+    client_in: ClientCreate,
+    current_user: UserModel = Depends(get_current_active_user)
+) -> Any:
+    """
+    Crea un nuevo cliente.
+    """
+    return client_service.create_client(db=db, client=client_in)
